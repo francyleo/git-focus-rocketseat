@@ -1,9 +1,18 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Http from '../../services/http'
 
 import {} from './styles'
 
 export default class Repository extends Component {
+	static propTypes = {
+		match: PropTypes.shape({
+			params: PropTypes.shape({
+				repository: PropTypes.string,
+			}),
+		}).isRequired,
+	}
+
 	state = {
 		repository: {},
 		issues: [],
@@ -12,7 +21,10 @@ export default class Repository extends Component {
 
 	async componentDidMount() {
 		this.setState({ loading: true })
-		const decodedRepo = decodeURIComponent(this.props.match.params.repository)
+
+		const { match } = this.props
+
+		const decodedRepo = decodeURIComponent(match.params.repository)
 
 		const [repository, issues] = await Promise.all([
 			Http.get(`repos/${decodedRepo}`),
