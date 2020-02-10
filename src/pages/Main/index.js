@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Http from '../../services/http'
 import { FaGithubAlt, FaPlus, FaSpinner } from 'react-icons/fa'
-import { Container, Form, SubmitButton, List } from './styles'
+import { Form, SubmitButton, List } from './styles'
+import Container from '../../components/Container'
 
 export default class Main extends Component {
 	state = {
@@ -38,13 +39,13 @@ export default class Main extends Component {
 
 		const { newRepo, repositories } = this.state
 
-		const response = await Http.get(`repos/francyleo/${newRepo}`)
+		const response = await Http.get(`repos/${newRepo}`)
 
 		const data = {
 			name: response.data.full_name,
 		}
 
-		this.setState({ repositories: [...repositories, data], loading: false })
+		this.setState({ repositories: [...repositories, data], newRepo: '', loading: false })
 	}
 
 	render() {

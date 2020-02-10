@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import Http from '../../services/http'
 
-import {} from './styles'
+import { Loading, Owner, IssueList } from './styles'
+import Container from '../../components/Container'
 
 export default class Repository extends Component {
 	static propTypes = {
@@ -14,14 +16,14 @@ export default class Repository extends Component {
 	}
 
 	state = {
-		repository: {},
+		repository: {
+			owner: {},
+		},
 		issues: [],
-		loading: false,
+		loading: true,
 	}
 
 	async componentDidMount() {
-		this.setState({ loading: true })
-
 		const { match } = this.props
 
 		const decodedRepo = decodeURIComponent(match.params.repository)
@@ -38,17 +40,43 @@ export default class Repository extends Component {
 
 		this.setState({
 			repository: repository.data,
-			issues: repository.data,
+			issues: issues.data,
 			loading: false,
 		})
 	}
 
 	render() {
 		const { repository, issues, loading } = this.state
+
+		if (loading) {
+			return <Loading>Carregando...</Loading>
+		}
+
 		return (
-			<div>
-				<h1>{repository.name}</h1>
-			</div>
+			<Container>
+				<Owner>
+					<Link to="/">Voltar aos repositórios</Link>
+					<img src={repository.owner.avatar_url} alt={repository.owner.login} />
+					<h1>{repository.name}</h1>
+					<p>{repository.description}</p>
+				</Owner>
+				<IssueList>
+					{issues.map(issue => (
+						<li key={String(issue.id)}>
+							<img src={issue.user.avatar_url} alt={issue.user.login} />
+							<div>
+								<strong>
+									<a href={issue.html_url}>{issue.title}</a>
+									{issue.labels.map(label => (
+										<span key={String(label.id)}>{label.name}</span>
+									))}
+								</strong>
+								<p>{issue.user.login}</p>
+							</div>
+						</li>
+					))}
+				</IssueList>
+			</Container>
 		)
 	}
 }
