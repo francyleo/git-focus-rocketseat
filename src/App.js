@@ -1,11 +1,14 @@
-import React from "react";
+import React from 'react'
+import Router from './router'
+import GlobalStyle from './styles/global'
 
 function App() {
-  return (
-    <div className="App">
-      <h1>OK</h1>
-    </div>
-  );
+	return (
+		<>
+			<Router />
+			<GlobalStyle />
+		</>
+	)
 }
 
-export default App;
+export default App
