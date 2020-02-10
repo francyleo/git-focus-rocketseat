@@ -1,2 +1,2 @@
-import styled, { keyframes, css } from 'styled-components'
-import Colors from '../../styles/colors'
+// import styled from 'styled-components'
+// import Colors from '../../styles/colors'
