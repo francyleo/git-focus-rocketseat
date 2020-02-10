@@ -4,7 +4,13 @@
 
 Projeto baseado na api do github, para estudo no curso do bootcamp da rocketseat.
 
-![]("./src/assets/docs/Main_page.png")
+### Main Page
+
+![Main_Page](/src/assets/docs/Main_page.PNG)
+
+### Repository Page
+
+![Repo_page](/src/assets/docs/Repo_page.PNG)
 
 ### Tech
 
